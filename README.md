@@ -104,3 +104,30 @@ If you find this project useful for your research, please use the following BibT
 
 ## :love_letter: Acknowledgments
 This project is based on [Diffusers](https://github.com/huggingface/diffusers), [Stable Diffusion](https://github.com/Stability-AI/stablediffusion), [OSEDiff](https://github.com/cswry/OSEDiff), [RAM](https://drive.google.com/drive/folders/1EHdH312K4gwyiU6R_elX0-doXHUx-pLr?usp=sharing), and [BasicSR](https://github.com/XPixelGroup/BasicSR). Thanks for their awesome works :star:
+
+
+## :notebook: kyng-codeops Notes:
+The project does not appear to include any kind of training code, just the inferencing code.
+My intention is to create pyTorch training scripts to fine-tune the provided pretrained
+model.
+
+1. To get the environment to install as of 2026-04-02 the mmcv needed prebuilt download link
+2. The RAM and DAPE weights were easy to find but the stable-diffusion weights moved
+3. Steps I used for stable-diffusion:
+    ```
+    mkdir -p weights
+    huggingface-cli download Manojb/stable-diffusion-2-1-base --local-dir ./weights/stable-diffusion-2-1-base
+    ```
+
+### Future Work Plan:
+
+1. Test the pretrained model then decide on fine-tuning
+2. If I'm successful creating training wrappers, I will re-post.
+
+  Possible training sets:
+
+    https://huggingface.co/datasets/WisonZws/RealisVideo-4K
+
+
+    https://seungjunnah.github.io/Datasets/reds.html
+

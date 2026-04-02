@@ -1,3 +1,5 @@
+numpy<2
+setuptools<81
 torch==2.1.2
 torchvision==0.16.2
 triton==2.1.0
@@ -21,4 +23,6 @@ open-clip-torch==2.20.0
 lpips==0.1.4
 pyiqa==0.1.10
 mmengine==0.10.5
+--find-links https://download.openmmlab.com/mmcv/dist/cu121/torch2.1.0/index.html
 mmcv==2.2.0
+fairscale

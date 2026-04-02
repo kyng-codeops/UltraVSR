@@ -1,0 +1,72 @@
+name: ultvsr
+channels:
+  - pytorch
+  - nvidia
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.10
+  # --- CUDA toolkit (kept from existing hardware setup) ---
+  - cuda-cudart=12.4.127
+  - cuda-cupti=12.4.127
+  - cuda-libraries=12.4.1
+  - cuda-nvrtc=12.4.127
+  - cuda-nvtx=12.4.127
+  - cuda-opencl=12.6.77
+  - cuda-runtime=12.4.1
+  - cuda-version=12.6
+  - libcublas=12.4.5.8
+  - libcufft=11.2.1.3
+  - libcufile=1.11.1.6
+  - libcurand=10.3.7.77
+  - libcusolver=11.6.1.9
+  - libcusparse=12.3.1.170
+  - libnpp=12.2.5.30
+  - libnvfatbin=12.6.77
+  - libnvjitlink=12.4.127
+  - libnvjpeg=12.3.1.117
+  # --- System libraries ---
+  # NOTE: ffmpeg and av are NOT installed via conda so that the system FFmpeg
+  # (with hevc_nvenc / h264_nvenc support) is used instead.
+  # PyAV is installed via pip below to link against system FFmpeg libs.
+  - pip
+  - setuptools<81
+  - wheel
+  # --- Project dependencies (via pip, per upstream README) ---
+  - pip:
+      # PyTorch ecosystem — torch 2.1.2 has builds for cu118 and cu121;
+      # cu121 is compatible with your CUDA 12.4 driver (forward-compatible).
+      - --extra-index-url https://download.pytorch.org/whl/cu121
+      - numpy<2
+      - torch==2.1.2
+      - torchvision==0.16.2
+      - triton==2.1.0
+      - xformers==0.0.23.post1
+      # Video / image I/O
+      - av
+      - ffmpeg-python==0.2.0
+      - decord==0.6.0
+      - opencv-python==4.7.0.72
+      - imageio==2.34.1
+      - Pillow==9.4.0
+      # Core utilities
+      - PyYAML==6.0.1
+      - einops==0.7.0
+      # HuggingFace stack
+      - huggingface-hub==0.23.4
+      - transformers==4.33.2
+      - diffusers==0.25.0
+      - accelerate==1.0.1
+      - safetensors==0.4.3
+      - peft==0.13.2
+      # LoRA / CLIP
+      - loralib==0.1.2
+      - open-clip-torch==2.20.0
+      # Metrics / losses
+      - lpips==0.1.4
+      - pyiqa==0.1.10
+      # OpenMMLab
+      - mmengine==0.10.5
+      - --find-links https://download.openmmlab.com/mmcv/dist/cu121/torch2.1.0/index.html
+      - mmcv==2.2.0
+      - fairscale
