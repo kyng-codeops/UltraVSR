@@ -111,7 +111,7 @@ The project does not appear to include any kind of training code, just the infer
 My intention is to create pyTorch training scripts to fine-tune the provided pretrained
 model.
 
-1. To get the environment to install as of 2026-04-02 the mmcv needed prebuilt download link
+1. To get the environment to install as of 2026-04-02 the mmcv needed a prebuilt download link
 2. The RAM and DAPE weights were easy to find but the stable-diffusion weights moved
 3. Steps I used for stable-diffusion:
     ```
@@ -131,3 +131,56 @@ model.
 
     https://seungjunnah.github.io/Datasets/reds.html
 
+
+### REDS Dataset Download & Training
+
+The REDS dataset contains 240 training sequences and 30 validation sequences, each with 100 frames at 720p. The expected folder layout is:
+
+```
+REDS/
+  train_sharp/
+    000/
+      00000000.png
+      00000001.png
+      ...
+      00000099.png
+    001/
+    ...
+    239/
+  val_sharp/
+    000/
+    ...
+    029/
+```
+
+1. Download from HuggingFace (train_sharp is ~30GB):
+    ```bash
+    # Pick a location on your SSD with enough space
+    huggingface-cli download REDS-dataset/train_sharp --repo-type dataset \
+      --local-dir /path/to/ssd/REDS/train_sharp
+
+    huggingface-cli download REDS-dataset/val_sharp --repo-type dataset \
+      --local-dir /path/to/ssd/REDS/val_sharp
+    ```
+
+2. Start training with the custom `train.py` script:
+    ```bash
+    python train.py --dataset_path /path/to/ssd/REDS/train_sharp \
+      --output_dir ./checkpoints
+    ```
+
+3. Resume from a checkpoint:
+    ```bash
+    python train.py --dataset_path /path/to/ssd/REDS/train_sharp \
+      --resume ./checkpoints/model_latest.pkl
+    ```
+
+4. Train on REDS + your own custom data:
+    ```bash
+    python train.py --dataset_path /path/to/ssd/REDS/train_sharp /path/to/your/data
+    ```
+
+5. Run inference with a fine-tuned checkpoint:
+    ```bash
+    python run_inference.py -i video.mp4 --model_path ./checkpoints/model_latest.pkl
+    ```
